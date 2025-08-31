@@ -81,20 +81,6 @@
           </select>
         </div>
         
-        <div class="form-group">
-          <label>QR Code Type</label>
-          <div class="qr-type-selector">
-            <div class="type-option selected" onclick="selectType('solanapay')" data-type="solanapay">
-              <strong>Solana Pay</strong>
-              <div style="font-size: 12px; color: #9EDFD1; margin-top: 4px;">Direct</div>
-            </div>
-            <div class="type-option" onclick="selectType('phantom')" data-type="phantom">
-              <strong>Phantom</strong>
-              <div style="font-size: 12px; color: #9EDFD1; margin-top: 4px;">Browser</div>
-            </div>
-          </div>
-        </div>
-        
         <button type="submit" class="generate-btn">
           Generate QR Code
         </button>
@@ -106,22 +92,19 @@
       
       <div id="qr-code"></div>
       
-      <div class="payment-url" id="payment-url"></div>
-      
-      <div class="qr-actions">
-        <button class="action-btn download-btn" onclick="downloadQR()">
-          Download
-        </button>
-        <button class="action-btn share-btn" onclick="shareQR()">
-          Share
-        </button>
-        <button class="action-btn copy-btn" onclick="copyURL()">
-          Copy URL
-        </button>
-        <button class="action-btn new-btn" onclick="resetForm()">
-          New QR
-        </button>
+      <div class="payment-url">
+        <input type="text" id="payment-url" readonly />
+        <button class="copy-button" onclick="copyURL()" aria-label="Copy URL">📋</button>
       </div>
+
+      <div id="devnet-warning" class="warning-box" style="display:none">
+        <strong>Test Mode (Devnet)</strong><br>
+        Using test SOL only. Switch to mainnet for real payments.
+      </div>
+
+      <button class="action-btn back-btn" onclick="resetForm()">
+        Back to Edit
+      </button>
     </div>
   </div>
 
