@@ -86,6 +86,20 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         warningBox.style.display = 'none';
       }
+
+      // ネットワークバッジ表示（フォームの選択に基づく）
+      const badge = document.getElementById('network-badge');
+      if (badge) {
+        badge.style.display = 'inline-flex';
+        badge.classList.remove('devnet', 'mainnet');
+        if (network === 'devnet') {
+          badge.textContent = (mode === 'blink' ? 'Blink • Devnet' : 'Solana Pay • Devnet');
+          badge.classList.add('devnet');
+        } else {
+          badge.textContent = (mode === 'blink' ? 'Blink • Mainnet' : 'Solana Pay • Mainnet');
+          badge.classList.add('mainnet');
+        }
+      }
       
       document.getElementById('qr-result').scrollIntoView({ behavior: 'smooth' });
     });

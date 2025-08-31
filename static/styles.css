@@ -249,3 +249,27 @@ input:hover, textarea:hover, select:hover {
 .warning-box strong {
   color: #FFB84D;
 }
+
+/* Network badge */
+.net-badge {
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: rgba(0, 255, 194, 0.12);
+  color: #7FFFE3;
+}
+
+.net-badge.devnet {
+  background: rgba(255, 184, 77, 0.15);
+  color: #FFCC80;
+  border-color: rgba(255, 184, 77, 0.35);
+}
+
+.net-badge.mainnet {
+  background: rgba(0, 255, 194, 0.12);
+  color: #7FFFE3;
+  border-color: rgba(0, 255, 194, 0.35);
+}
