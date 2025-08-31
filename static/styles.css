@@ -7,7 +7,10 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: radial-gradient(1200px 800px at 20% -10%, rgba(0, 255, 194, 0.18) 0%, rgba(0,0,0,0) 60%),
+              radial-gradient(1000px 700px at 100% 0%, rgba(0, 204, 153, 0.16) 0%, rgba(0,0,0,0) 55%),
+              linear-gradient(160deg, #0b0b0f 0%, #090a0f 50%, #040507 100%);
+  color: #E6F7F2;
   min-height: 100vh;
   padding: 20px;
 }
@@ -19,7 +22,7 @@ body {
 
 .header {
   text-align: center;
-  color: white;
+  color: #EAFBF6;
   margin-bottom: 30px;
 }
 
@@ -29,10 +32,12 @@ body {
 }
 
 .card {
-  background: white;
+  background: linear-gradient(180deg, rgba(13, 18, 22, 0.9), rgba(9, 12, 15, 0.85));
+  backdrop-filter: blur(6px);
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.03);
+  border: 1px solid rgba(0, 255, 194, 0.08);
   margin-bottom: 20px;
 }
 
@@ -44,21 +49,25 @@ label {
   display: block;
   margin-bottom: 8px;
   font-weight: 600;
-  color: #333;
+  color: #CFEDE6;
 }
 
 input, textarea {
   width: 100%;
   padding: 12px;
-  border: 2px solid #e0e0e0;
+  border: 1px solid rgba(0, 255, 194, 0.15);
+  background: rgba(11, 15, 18, 0.8);
+  color: #EAFBF6;
   border-radius: 10px;
   font-size: 16px;
-  transition: border-color 0.3s;
+  transition: border-color 0.2s, box-shadow 0.2s, background-color 0.2s;
 }
 
 input:focus, textarea:focus {
   outline: none;
-  border-color: #667eea;
+  border-color: rgba(0, 255, 194, 0.5);
+  box-shadow: 0 0 0 4px rgba(0, 255, 194, 0.12);
+  background: rgba(14, 20, 24, 0.95);
 }
 
 .amount-presets {
@@ -70,8 +79,9 @@ input:focus, textarea:focus {
 
 .preset-btn {
   padding: 10px;
-  border: 2px solid #e0e0e0;
-  background: white;
+  border: 1px solid rgba(0, 255, 194, 0.15);
+  background: linear-gradient(180deg, rgba(13, 18, 22, 0.9), rgba(9, 12, 15, 0.85));
+  color: #CFEDE6;
   border-radius: 8px;
   cursor: pointer;
   transition: all 0.2s;
@@ -79,34 +89,37 @@ input:focus, textarea:focus {
 }
 
 .preset-btn:hover {
-  border-color: #667eea;
-  background: #f3e5ff;
+  border-color: rgba(0, 255, 194, 0.45);
+  background: linear-gradient(180deg, rgba(16, 24, 27, 0.95), rgba(10, 14, 17, 0.9));
 }
 
 .generate-btn {
   width: 100%;
   padding: 16px;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  color: white;
+  background: linear-gradient(135deg, #00FFC2 0%, #35D6A2 40%, #16A085 100%);
+  color: #02110B;
   border: none;
   border-radius: 12px;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 800;
+  letter-spacing: 0.2px;
   cursor: pointer;
-  transition: transform 0.2s;
+  transition: transform 0.2s, filter 0.2s;
 }
 
 .generate-btn:hover { 
-  transform: scale(1.02); 
+  transform: scale(1.02);
+  filter: brightness(1.05);
 }
 
 #qr-result {
   display: none;
   text-align: center;
   padding: 30px;
-  background: #f9f9f9;
+  background: linear-gradient(180deg, rgba(13, 18, 22, 0.9), rgba(9, 12, 15, 0.85));
   border-radius: 16px;
   margin-top: 20px;
+  border: 1px solid rgba(0, 255, 194, 0.08);
 }
 
 #qr-result.show { 
@@ -117,9 +130,10 @@ input:focus, textarea:focus {
   max-width: 300px;
   margin: 20px auto;
   padding: 20px;
-  background: white;
+  background: #0D1216;
   border-radius: 12px;
-  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  border: 1px solid rgba(0, 255, 194, 0.08);
 }
 
 #qr-code img {
@@ -136,55 +150,56 @@ input:focus, textarea:focus {
 
 .action-btn {
   padding: 12px;
-  border: none;
+  border: 1px solid rgba(0,0,0,0);
   border-radius: 8px;
-  font-weight: 600;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.2s;
 }
 
 .download-btn { 
-  background: #4CAF50; 
-  color: white; 
+  background: linear-gradient(135deg, #00FFC2 0%, #1ABC9C 100%);
+  color: #05120E;
 }
 
 .share-btn { 
-  background: #2196F3; 
-  color: white; 
+  background: linear-gradient(135deg, #00BFA5 0%, #00ACC1 100%);
+  color: #041014;
 }
 
 .copy-btn { 
-  background: #FF9800; 
-  color: white; 
+  background: linear-gradient(135deg, #00E5A8 0%, #00C896 100%);
+  color: #05120E;
 }
 
 .new-btn { 
-  background: #9C27B0; 
-  color: white; 
+  background: linear-gradient(135deg, #2E3A3F 0%, #101417 100%);
+  color: #CFEDE6;
+  border: 1px solid rgba(0, 255, 194, 0.12);
 }
 
 .payment-url {
   margin: 20px 0;
   padding: 15px;
-  background: white;
+  background: #0D1216;
   border-radius: 10px;
-  border: 2px solid #e0e0e0;
+  border: 1px solid rgba(0, 255, 194, 0.12);
   word-break: break-all;
-  font-family: monospace;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
   font-size: 12px;
-  color: #666;
+  color: #A2D9CE;
 }
 
 .info-box {
-  background: #E3F2FD;
-  border-left: 4px solid #2196F3;
+  background: linear-gradient(180deg, rgba(0, 255, 194, 0.08), rgba(0, 255, 194, 0.03));
+  border-left: 4px solid rgba(0, 255, 194, 0.6);
   padding: 15px;
   border-radius: 8px;
   margin-bottom: 20px;
 }
 
 .info-box h3 {
-  color: #1976D2;
+  color: #7FFFE3;
   margin-bottom: 8px;
 }
 
@@ -197,8 +212,9 @@ input:focus, textarea:focus {
 .type-option {
   flex: 1;
   padding: 10px;
-  border: 2px solid #e0e0e0;
-  background: white;
+  border: 1px solid rgba(0, 255, 194, 0.15);
+  background: linear-gradient(180deg, rgba(13, 18, 22, 0.9), rgba(9, 12, 15, 0.85));
+  color: #CFEDE6;
   border-radius: 8px;
   cursor: pointer;
   text-align: center;
@@ -206,16 +222,16 @@ input:focus, textarea:focus {
 }
 
 .type-option.selected {
-  border-color: #667eea;
-  background: #f3e5ff;
+  border-color: rgba(0, 255, 194, 0.6);
+  box-shadow: 0 0 0 4px rgba(0, 255, 194, 0.12) inset;
 }
 
 .warning-box {
-  background: #FFF3E0;
-  border-left: 4px solid #FF9800;
+  background: linear-gradient(180deg, rgba(255, 184, 77, 0.08), rgba(255, 184, 77, 0.03));
+  border-left: 4px solid rgba(255, 184, 77, 0.7);
   padding: 12px;
   border-radius: 8px;
   margin-top: 15px;
   font-size: 14px;
-  color: #E65100;
+  color: #FFCC80;
 }
