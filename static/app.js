@@ -1,7 +1,5 @@
 // app.js - Solana Payment QR Generator クライアントサイドJS
 
-let selectedType = 'solanapay';
-
 window.onload = function() {
   const savedWallet = localStorage.getItem('wallet_address');
   if (savedWallet) {
@@ -9,48 +7,35 @@ window.onload = function() {
   }
 };
 
-function selectType(type) {
-  selectedType = type;
-  document.querySelectorAll('.type-option').forEach(opt => {
-    opt.classList.remove('selected');
-  });
-  document.querySelector(`[data-type="${type}"]`).classList.add('selected');
-}
-
 function setAmount(value) {
   document.getElementById('amount').value = value;
 }
 
-function downloadQR() {
-  const img = document.querySelector('#qr-code img');
-  const link = document.createElement('a');
-  link.href = img.src;
-  link.download = `solana-payment-${Date.now()}.png`;
-  link.click();
-}
 
-async function shareQR() {
-  const url = document.getElementById('payment-url').textContent;
-  
-  if (navigator.share) {
-    try {
-      await navigator.share({
-        title: 'Solana Payment Request',
-        text: 'Please send SOL',
-        url: url
-      });
-    } catch (err) {
-      copyURL();
-    }
-  } else {
-    copyURL();
-  }
-}
 
 function copyURL() {
   const url = document.getElementById('payment-url').textContent;
+  const copyBtn = document.querySelector('.copy-icon-btn');
+  
   navigator.clipboard.writeText(url).then(() => {
-    alert('URL copied!');
+    // 元のコンテンツを保存
+    const originalHTML = copyBtn.innerHTML;
+    
+    // "Copied!"メッセージを表示
+    copyBtn.innerHTML = `
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00FFC2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="20 6 9 17 4 12"></polyline>
+      </svg>
+    `;
+    copyBtn.classList.add('copied');
+    
+    // 2秒後に元に戻す
+    setTimeout(() => {
+      copyBtn.innerHTML = originalHTML;
+      copyBtn.classList.remove('copied');
+    }, 2000);
+  }).catch(err => {
+    console.error('Failed to copy URL:', err);
   });
 }
 
@@ -75,17 +60,8 @@ document.addEventListener('DOMContentLoaded', function() {
       
       localStorage.setItem('wallet_address', wallet);
       
-      let paymentUrl;
-      
-      if (selectedType === 'solanapay') {
-        // Solana Pay URL
-        paymentUrl = `solana:${wallet}?amount=${amount}&label=${encodeURIComponent('Payment Request')}&message=${encodeURIComponent(memo)}`;
-      } else {
-        // Phantom Universal Link
-        const baseUrl = window.location.origin;
-        const targetUrl = `${baseUrl}/pay/${wallet}?amount=${amount}&memo=${encodeURIComponent(memo)}&network=${network}`;
-        paymentUrl = `https://phantom.app/ul/browse/${targetUrl}`;
-      }
+      // Solana Pay URL
+      const paymentUrl = `solana:${wallet}?amount=${amount}&label=${encodeURIComponent('Payment Request')}&message=${encodeURIComponent(memo)}`;
       
       const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(paymentUrl)}`;
       
@@ -93,15 +69,20 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('payment-url').textContent = paymentUrl;
       document.getElementById('qr-result').classList.add('show');
       
+      // Devnet警告の表示/非表示
+      const warningBox = document.getElementById('devnet-warning');
+      if (network === 'devnet') {
+        warningBox.style.display = 'block';
+      } else {
+        warningBox.style.display = 'none';
+      }
+      
       document.getElementById('qr-result').scrollIntoView({ behavior: 'smooth' });
     });
   }
 });
 
 // グローバル関数として公開（onclick属性で使用するため）
-window.selectType = selectType;
 window.setAmount = setAmount;
-window.downloadQR = downloadQR;
-window.shareQR = shareQR;
 window.copyURL = copyURL;
 window.resetForm = resetForm;

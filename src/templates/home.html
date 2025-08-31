@@ -81,19 +81,7 @@
           </select>
         </div>
         
-        <div class="form-group">
-          <label>QR Code Type</label>
-          <div class="qr-type-selector">
-            <div class="type-option selected" onclick="selectType('solanapay')" data-type="solanapay">
-              <strong>Solana Pay</strong>
-              <div style="font-size: 12px; color: #9EDFD1; margin-top: 4px;">Direct</div>
-            </div>
-            <div class="type-option" onclick="selectType('phantom')" data-type="phantom">
-              <strong>Phantom</strong>
-              <div style="font-size: 12px; color: #9EDFD1; margin-top: 4px;">Browser</div>
-            </div>
-          </div>
-        </div>
+
         
         <button type="submit" class="generate-btn">
           Generate QR Code
@@ -106,20 +94,24 @@
       
       <div id="qr-code"></div>
       
-      <div class="payment-url" id="payment-url"></div>
+      <div class="url-container">
+        <div class="payment-url" id="payment-url"></div>
+        <button type="button" class="copy-icon-btn" onclick="copyURL()" aria-label="URLをコピー">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+          </svg>
+        </button>
+      </div>
+      
+      <div id="devnet-warning" class="warning-box" style="display: none;">
+        <strong>Test Mode (Devnet)</strong><br>
+        Using test SOL only. Switch to mainnet for real payments.
+      </div>
       
       <div class="qr-actions">
-        <button class="action-btn download-btn" onclick="downloadQR()">
-          Download
-        </button>
-        <button class="action-btn share-btn" onclick="shareQR()">
-          Share
-        </button>
-        <button class="action-btn copy-btn" onclick="copyURL()">
-          Copy URL
-        </button>
         <button class="action-btn new-btn" onclick="resetForm()">
-          New QR
+          Back to Edit
         </button>
       </div>
     </div>
