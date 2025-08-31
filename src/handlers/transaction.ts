@@ -10,6 +10,10 @@ export async function handleTransaction(req: Request): Promise<Response> {
   try {
     const body = await req.json();
     const { account } = body;
+    
+    if (!account) {
+      throw new Error("Account address is required");
+    }
 
     const base64Transaction = await createTransferTransaction(
       account,
@@ -26,12 +30,16 @@ export async function handleTransaction(req: Request): Promise<Response> {
         headers: {
           "Content-Type": "application/json",
           "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Methods": "POST,OPTIONS",
         },
       }
     );
   } catch (error) {
+    console.error("Transaction error:", error);
     return new Response(
-      JSON.stringify({ error: error.message }), 
+      JSON.stringify({ 
+        error: error instanceof Error ? error.message : "Transaction failed" 
+      }), 
       { 
         status: 500,
         headers: {

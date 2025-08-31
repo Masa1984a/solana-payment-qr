@@ -2,8 +2,10 @@
     "tasks": {
       "dev": "deno run --watch --allow-net --allow-read main.ts",
       "start": "deno run --allow-net --allow-read main.ts",
+      "deploy": "deployctl deploy --prod --project=solana-payment-qr main.ts",
       "fmt": "deno fmt",
-      "lint": "deno lint"
+      "lint": "deno lint",
+      "check": "deno check main.ts"
     },
     "imports": {
       "@solana/": "https://esm.sh/@solana/",
@@ -11,6 +13,25 @@
     },
     "compilerOptions": {
       "jsx": "react-jsx",
-      "jsxImportSource": "react"
+      "jsxImportSource": "react",
+      "lib": ["deno.window", "dom"]
+    },
+    "lint": {
+      "files": {
+        "include": ["src/", "main.ts"],
+        "exclude": ["static/"]
+      }
+    },
+    "fmt": {
+      "files": {
+        "include": ["src/", "main.ts"],
+        "exclude": ["static/"]
+      },
+      "options": {
+        "useTabs": false,
+        "lineWidth": 80,
+        "indentWidth": 2,
+        "singleQuote": false
+      }
     }
 }
