@@ -6,6 +6,7 @@ export async function handleTransaction(req: Request): Promise<Response> {
   const pathParts = url.pathname.split("/");
   const recipientWallet = pathParts[3];
   const amount = pathParts[4];
+  const network = url.searchParams.get("network") || "mainnet-beta";
   
   try {
     const body = await req.json();
@@ -18,7 +19,8 @@ export async function handleTransaction(req: Request): Promise<Response> {
     const base64Transaction = await createTransferTransaction(
       account,
       recipientWallet,
-      parseFloat(amount)
+      parseFloat(amount),
+      network
     );
 
     return new Response(

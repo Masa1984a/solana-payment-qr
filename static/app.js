@@ -71,6 +71,7 @@ document.addEventListener('DOMContentLoaded', function() {
       const wallet = document.getElementById('wallet').value;
       const amount = document.getElementById('amount').value;
       const memo = document.getElementById('memo').value || 'Payment';
+      const network = document.getElementById('network').value;
       
       localStorage.setItem('wallet_address', wallet);
       
@@ -82,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function() {
       } else {
         // Phantom Universal Link
         const baseUrl = window.location.origin;
-        const targetUrl = `${baseUrl}/pay/${wallet}?amount=${amount}&memo=${encodeURIComponent(memo)}`;
+        const targetUrl = `${baseUrl}/pay/${wallet}?amount=${amount}&memo=${encodeURIComponent(memo)}&network=${network}`;
         paymentUrl = `https://phantom.app/ul/browse/${targetUrl}`;
       }
       

@@ -8,12 +8,15 @@ import {
     LAMPORTS_PER_SOL
   } from "https://esm.sh/@solana/web3.js@1.87.6";
   
+  type SolanaCluster = "devnet" | "testnet" | "mainnet-beta";
+
   export async function createTransferTransaction(
     senderAddress: string,
     recipientAddress: string,
-    amountSOL: number
+    amountSOL: number,
+    network: string,
   ): Promise<string> {
-    const connection = new Connection(clusterApiUrl("devnet"));
+    const connection = new Connection(clusterApiUrl(network as SolanaCluster));
     const sender = new PublicKey(senderAddress);
     const recipient = new PublicKey(recipientAddress);
     

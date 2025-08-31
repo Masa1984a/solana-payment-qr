@@ -7,6 +7,7 @@ export async function handleBlinks(req: Request): Promise<Response> {
   const recipientWallet = pathParts[2];
   const amount = url.searchParams.get("amount") || "0.1";
   const memo = url.searchParams.get("memo") || "Payment";
+  const network = url.searchParams.get("network") || "mainnet-beta";
   
   const metadata: BlinksMetadata = {
     type: "action",
@@ -17,7 +18,7 @@ export async function handleBlinks(req: Request): Promise<Response> {
     links: {
       actions: [{
         label: `Send ${amount} SOL`,
-        href: `/api/transaction/${recipientWallet}/${amount}`,
+        href: `/api/transaction/${recipientWallet}/${amount}?network=${network}`,
       }],
     },
   };
