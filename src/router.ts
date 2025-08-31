@@ -3,6 +3,7 @@ import { handleHome } from "./handlers/home.ts";
 import { handleBlinks } from "./handlers/blinks.ts";
 import { handleTransaction } from "./handlers/transaction.ts";
 import { handleStaticFile } from "./handlers/static.ts";
+import { handleActionsJson } from "./handlers/actions_json.ts";
 
 export async function router(req: Request): Promise<Response> {
   const url = new URL(req.url);
@@ -35,14 +36,19 @@ export async function router(req: Request): Promise<Response> {
     if (method === "GET" && pathname === "/") {
       return await handleHome(req);
     }
+
+    // actions.json 配信
+    if (method === "GET" && pathname === "/actions.json") {
+      return handleActionsJson(req);
+    }
     
-    // Blinks endpoint
-    if (method === "GET" && pathname.startsWith("/pay/")) {
+    // Blinks/Actionsメタデータ（従来 /pay/* も維持）
+    if (method === "GET" && (pathname.startsWith("/pay/") || pathname.startsWith("/api/actions/pay/"))) {
       return await handleBlinks(req);
     }
     
-    // Transaction endpoint
-    if (method === "POST" && pathname.startsWith("/api/transaction/")) {
+    // Transaction endpoints（新旧サポート）
+    if (method === "POST" && (pathname.startsWith("/api/transaction/") || pathname.startsWith("/api/actions/pay/"))) {
       return await handleTransaction(req);
     }
     

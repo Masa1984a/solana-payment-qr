@@ -4,8 +4,17 @@ import { createTransferTransaction } from "../utils/solana.ts";
 export async function handleTransaction(req: Request): Promise<Response> {
   const url = new URL(req.url);
   const pathParts = url.pathname.split("/");
-  const recipientWallet = pathParts[3];
-  const amount = pathParts[4];
+  let recipientWallet: string | undefined;
+  let amount: string | null = null;
+  // 新: /api/actions/pay/:recipient?amount=...
+  if (pathParts[2] === "actions" && pathParts[3] === "pay") {
+    recipientWallet = pathParts[4];
+    amount = url.searchParams.get("amount");
+  } else {
+    // 旧: /api/transaction/:recipient/:amount
+    recipientWallet = pathParts[3];
+    amount = pathParts[4] ?? null;
+  }
   const network = url.searchParams.get("network") || "mainnet-beta";
   
   try {
@@ -16,6 +25,12 @@ export async function handleTransaction(req: Request): Promise<Response> {
       throw new Error("Account address is required");
     }
 
+    if (!recipientWallet) {
+      throw new Error("Recipient address is required");
+    }
+    if (!amount) {
+      throw new Error("Amount is required");
+    }
     const base64Transaction = await createTransferTransaction(
       account,
       recipientWallet,

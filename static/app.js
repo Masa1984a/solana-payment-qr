@@ -57,16 +57,26 @@ document.addEventListener('DOMContentLoaded', function() {
       const amount = document.getElementById('amount').value;
       const memo = document.getElementById('memo').value || 'Payment';
       const network = document.getElementById('network').value;
+      const mode = document.getElementById('mode') ? document.getElementById('mode').value : 'solana_pay';
       
       localStorage.setItem('wallet_address', wallet);
       
-      // Solana Pay URL
-      const paymentUrl = `solana:${wallet}?amount=${amount}&label=${encodeURIComponent('Payment Request')}&message=${encodeURIComponent(memo)}`;
-      
-      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(paymentUrl)}`;
-      
+      let shareUrl = '';
+      if (mode === 'solana_pay') {
+        // Solana Pay URL (deep link)
+        shareUrl = `solana:${wallet}?amount=${amount}&label=${encodeURIComponent('Payment Request')}&message=${encodeURIComponent(memo)}`;
+      } else {
+        // Blink (Actions) URL via interstitial (dial.to)
+        const origin = window.location.origin;
+        const actionUrl = `${origin}/api/actions/pay/${wallet}?amount=${encodeURIComponent(amount)}&network=${encodeURIComponent(network)}&memo=${encodeURIComponent(memo)}`;
+        const blinkUrl = `solana-action:${actionUrl}`;
+        shareUrl = `https://dial.to/?action=${encodeURIComponent(blinkUrl)}`;
+      }
+
+      const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(shareUrl)}`;
+
       document.getElementById('qr-code').innerHTML = `<img src="${qrApiUrl}" alt="QR Code" />`;
-      document.getElementById('payment-url').textContent = paymentUrl;
+      document.getElementById('payment-url').textContent = shareUrl;
       document.getElementById('qr-result').classList.add('show');
       
       // Devnet警告の表示/非表示
